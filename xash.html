@@ -172,10 +172,10 @@
 			}
 		}
 
-		try{mem = Math.round(window.location.hash.substring(1));}catch(e){};
-
+		// try{mem = Math.round(window.location.hash.substring(1));}catch(e){mem = 150;};
+		// TODO: change 'mem' variable from constant number to HTML element value
 		var Module = {
-			TOTAL_MEMORY: mem * 1024 * 1024,
+			INITIAL_MEMORY: mem * 1024 * 1024,
 			preRun: [],
 			postRun: [],
 			print: (function() {
