@@ -83,6 +83,8 @@
 			<span><input type="button" value="Fullscreen" onclick="Module.requestFullscreen(document.getElementById('pointerLock').checked, document.getElementById('resize').checked)"></span>
 		</span></div>
 
+
+
 		<textarea id="output" rows="8"></textarea><div  id="asyncDialog" style="float:left"></div>
 		<form style=display:none id=fSettings>Select filesystem for settings and saverestore:<br>
 			<div id=idbHider style=display:none><input name=a type=radio id=rIndexedDB />IndexedDB (Need exit correctly to save changes)<br></div>
@@ -172,10 +174,10 @@
 			}
 		}
 
-		// try{mem = Math.round(window.location.hash.substring(1));}catch(e){mem = 150;};
-		// TODO: change 'mem' variable from constant number to HTML element value
+		try{mem = Math.round(window.location.hash.substring(1));}catch(e){};
+
 		var Module = {
-			INITIAL_MEMORY: mem * 1024 * 1024,
+			TOTAL_MEMORY: mem * 1024 * 1024,
 			preRun: [],
 			postRun: [],
 			print: (function() {
@@ -290,6 +292,7 @@
 			e.style.display=show?'block':'none';
 		}
 		Module.setStatus('Downloading...');
+
 
 		function startXash()
 		{
@@ -434,9 +437,26 @@
 		ENV = [];
 		</script>
 
-		<script async type="text/javascript" src="xash.js"></script>
+		<script>
+
+          (function() {
+            var memoryInitializer = 'xash.html.mem';
+            if (typeof Module['locateFile'] === 'function') {
+              memoryInitializer = Module['locateFile'](memoryInitializer);
+            } else if (Module['memoryInitializerPrefixURL']) {
+              memoryInitializer = Module['memoryInitializerPrefixURL'] + memoryInitializer;
+            }
+            var xhr = Module['memoryInitializerRequest'] = new XMLHttpRequest();
+            xhr.open('GET', memoryInitializer, true);
+            xhr.responseType = 'arraybuffer';
+            xhr.send(null);
+          })();
+
+          var script = document.createElement('script');
+          script.src = "xash.js";
+          document.body.appendChild(script);
+
+</script>
 
 	</body>
 </html>
-
-
