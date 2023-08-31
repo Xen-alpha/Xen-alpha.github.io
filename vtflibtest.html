@@ -12,15 +12,5 @@
 </head>
 <body>
 	<div id="test"></div>
-	<script type='text/javascript'>
-		var mfs;
-		function setupFS()
-		{
-			mfs = new BrowserFS.EmscriptenFS();
-			FS.createFolder(FS.root, 'data', true, true);
-			FS.mount(mfs, {root: '/'}, '/data');
-		}
-		setupFS();
-	</script>
 </body>
 </html>
